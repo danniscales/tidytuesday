@@ -18,23 +18,23 @@ departures %>%
   arrange(first_name) %>%
   count(first_name) %>%
   arrange(desc(n)) %>%
-  mutate(gender = gender::gender(first_name)$gender, method = c("ssa", "ipums", "napp", "kantrowitz", "genderize", "demo")) #assign gender to names
+  # mutate(gender = gender::gender(first_name)$gender, method = c("ssa", "ipums", "napp", "kantrowitz", "genderize", "demo")) %>% # assign gender to names
 
   # ggplot
   ggplot(aes(area = n, label = paste0(first_name,"\n", n))) +
-  geom_treemap(fill= "#7BBFA6", colour = "white") +
+  geom_treemap(fill= "#7BBFA6", colour = "white") + # change to fill = gender if you can ever get {gender} working
   geom_treemap_text(family ="System Font", size = 12, colour = "white", place = "topright",
                     grow = FALSE) +
   
   # captions and labels
   labs(title = "<span style = 'font-size:30pt; font-family:Georgia;'>Who run the world? Girls?</span>",
-       subtitle = "Most common names of CEO departures between 2000 and 2018<br>
-       <span style = 'color: #7BBFA6;'>Male</span> and <span style = 'color: pink;'>Female</span> CEO's.",
+       subtitle = "Most common names of CEO departures in S&P 1500 firms between 2000 and 2018<br>
+       Shading indicates <span style = 'color: #7BBFA6;'>Male</span> and <span style = 'color: pink;'>Female</span> CEO's, with the most common names and their counts displayed in the Treemap tiles",
        caption = "@danni_scales | source: investors.com") +
-
+ 
 #theme
   theme(
-    text = element_text(family ="System Font", color="#1E4E5E"),
+    text = element_text(family ="System Font", color="#629985"),
     plot.title = element_markdown(face = 'bold'), # required to enable html
     plot.subtitle = element_markdown(), # required to enable html
     plot.background = element_rect(fill = "white", colour = "white"),
